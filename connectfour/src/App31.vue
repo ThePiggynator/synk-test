@@ -1,12 +1,23 @@
 <template>
-
+  <img alt="Vue logo" src="./assets/logo.png">
+  <HeaderComponent/>
+  <WelcomeComponent/>
 </template>
 
 <script>
+import HeaderComponent from './components/HeaderComponent.vue'
+import WelcomeComponent from './components/WelcomeComponent.vue'
+
 export default {
-  name: "App31"
+  name: 'AppThirtyOne',
+  components: {
+    HeaderComponent,
+    WelcomeComponent
+  }
 }
+
 </script>
+
 
 <style scoped>
 
