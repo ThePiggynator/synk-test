@@ -1,17 +1,13 @@
 <template>
-  <header>
-    <h1>{{ msg }}</h1>
+  <link type="text/css" href="../assets/header.css">
+  <header class="header">
+    <img alt="Vue logo" src="../assets/logo.png">
   </header>
 </template>
 
 <script>
 export default {
-  name: "HeaderComponent",
-  data(){
-    return{
-      msg: "This is the Header component."
-    }
-  }
+  name: "HeaderComponent"
 }
 </script>
 
