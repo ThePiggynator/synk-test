@@ -26,6 +26,9 @@ export default {
   background-size: cover;
   color:white;
 }
+h4{
+  margin-top:0;
+}
   .foto {
     height: 100px;
     float: left;

@@ -11,6 +11,10 @@
         <a href="#">Link 3</a>
       </div>
     </li>
+    <li><a href="#">Login</a></li>
+
+    <li><a href="#">Signup</a></li>
+
   </ul>
 </template>
 
