@@ -52,6 +52,10 @@ export default {
   margin-right: 0;
   display: flex;
   flex-wrap: wrap;
+  background-image: url("../assets/pacmanbackground.jpg") ;
+  min-height: 82.4vh;
+  background-size: contain;
+  color: white;
 }
 
 .foto {
@@ -60,8 +64,8 @@ export default {
 }
 
 .center {
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
   width: 50%;
   padding-left: 10px;
   padding-right: 10px;

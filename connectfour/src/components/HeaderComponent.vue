@@ -3,15 +3,14 @@
     <div class="header">
       <div class="left">
         <!--      <h1 class="">Heading</h1>-->
-        <img class="foto" alt="Vue logo" src="../assets/logo.png" id="foto">
-        <div class="headerText>">
-          <h4>4 op een rij</h4>
-          <h5>Epic game</h5>
+        <div class="headerText">
+          <h1>Connect Four</h1>
+          <h2>Pacman Edition</h2>
         </div>
       </div>
       <div class="right">
-        <br><br>
         <h4>Today is: {{ date }}</h4>
+        <img class="foto" alt="Pacman gif" src="../assets/pacmanload.gif" id="foto">
       </div>
       <!--      <a class="btn btn-primary" href="" role="button">Call to action</a>-->
     </div>
@@ -36,9 +35,10 @@ export default {
   height: 125px;
   display: flex;
   justify-content: space-between;
-  background-image: url("../assets/background.png");
-  background-size: cover;
-  color: white;
+  background-image: url("../assets/banner.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 h4 {
@@ -51,6 +51,17 @@ h4 {
 
 .foto {
   height: 100px;
-  float: left;
+  margin-right: 30px;
+  float: right;
+}
+
+.right {
+  width: 20%;
+  flex-wrap: wrap;
+}
+
+.headerText {
+  padding-left: 10px;
+  flex-wrap: wrap;
 }
 </style>
