@@ -85,5 +85,6 @@ li.dropdown {
 .navbarFlex{
   display: flex;
   justify-content:space-between;
+  flex-wrap: wrap;
 }
 </style>

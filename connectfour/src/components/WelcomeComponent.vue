@@ -51,6 +51,7 @@ export default {
   margin-left: 0;
   margin-right: 0;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .foto {
@@ -66,13 +67,14 @@ export default {
   padding-right: 10px;
 }
 .left ,.right {
-  width: 25%;
   padding: 5px;
+  width: 22%;
 }
 .left{
   padding-left: 10px;
 }
 .right{
   padding-right: 10px;
+
 }
 </style>
