@@ -1,20 +1,24 @@
 <template>
 
-  <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#">News</a></li>
-    <li class="dropdown">
-      <a href="#" class="dropbtn">Dropdown</a>
-      <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
-      </div>
-    </li>
-    <li><a href="#">Login</a></li>
+  <ul class="navbarFlex">
+    <div class="right">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Games</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropbtn">Dropdown</a>
+        <div class="dropdown-content">
+          <a href="#">All games overview</a>
+          <a href="#">Games details (comp)</a>
+          <a href="#">Games edit (router)</a>
+        </div>
+      </li>
+      <li><a href="#">My account</a></li>
+    </div>
+    <div class="left">
+      <li><a href="#">Login</a></li>
 
-    <li><a href="#">Signup</a></li>
-
+      <li><a href="#">Signup</a></li>
+    </div>
   </ul>
 </template>
 
@@ -77,5 +81,9 @@ li.dropdown {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+.navbarFlex{
+  display: flex;
+  justify-content:space-between;
 }
 </style>
