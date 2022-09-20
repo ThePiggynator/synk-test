@@ -57,7 +57,8 @@ h4 {
 
 .right {
   width: 20%;
-  flex-wrap: wrap;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .headerText {

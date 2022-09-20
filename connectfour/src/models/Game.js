@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line no-unused-vars
-class game {
+export class Game {
     id;
     title;
     status;
@@ -11,13 +11,13 @@ class game {
 
 
     constructor(id, title, status, maxThinkTime, rated, createdAt, createdBy) {
-        this.id = id;
-        this.title = title;
-        this.status = status;
-        this.maxThinkTime = maxThinkTime;
-        this.rated = rated;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
+        this._id = id;
+        this._title = title;
+        this._status = status;
+        this._maxThinkTime = maxThinkTime;
+        this._rated = rated;
+        this._createdAt = createdAt;
+        this._createdBy = createdBy;
     }
     // eslint-disable-next-line no-unused-vars
     static createSampleGame(pId){
@@ -56,8 +56,32 @@ class game {
         }
         // get a random date within 31 days
         randomNum = Math.floor(Math.random() * 32);
-        createdAt = new Date() - randomNum;
 
-        return new game(id, title, status, maxThinkTime, rated, createdAt, createdBy)
+        createdAt = new Date();
+        createdAt.setDate(createdAt.getDate()-randomNum)
+
+        return new Game(id, title, status, maxThinkTime, rated, createdAt, createdBy)
+    }
+
+    getId(){
+        return this._id
+    }
+    getTitle(){
+        return this._title
+    }
+    getCreatedAt(){
+        return this._createdAt.toLocaleString()
+    }
+
+    getStatus(){
+        return this._status;
+    }
+
+    getRated(){
+        return this._rated
+    }
+    getMaxThinkTime(){
+        return this._maxThinkTime
     }
 }
+
