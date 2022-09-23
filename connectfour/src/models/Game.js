@@ -19,10 +19,9 @@ export class Game {
         this._createdAt = createdAt;
         this._createdBy = createdBy;
     }
-    // eslint-disable-next-line no-unused-vars
     static createSampleGame(pId){
         let id = pId;
-        let title = "Sample game: " + Math.floor(Math.random() * 1000);
+        let title = "Sample game: " + Math.ceil(Math.random() * 10000);
         let status;
         let maxThinkTime = Math.floor(Math.random() * 100);
         let rated;
