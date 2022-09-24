@@ -18,7 +18,7 @@
       <button class="button" v-on:click="onNewGame">New game</button>
     </div>
     <template v-if="selectedGameId !== 0">
-      <detail32 selected-game="{{this.selectedGame}}"/>
+      <detail32 @update="updateGame()" @delete="deleteGame()" :selected-game="this.selectedGame"/>
     </template>
     <template v-else>
       <h2>Select a game</h2>
@@ -31,20 +31,23 @@ import Detail32 from './Detail32.vue'
 import {Game} from '@/models/Game.js';
 
 let lastId = 30000;
-// eslint-disable-next-line no-unused-vars
 export default {
   name: "GamesOverview32",
 
   created() {
     for (let i = 0; i < 8; i++) {
       lastId += Math.ceil(Math.random() * 3)
+      // eslint-disable-next-line
       this.gameData.push(Game.createSampleGame(lastId))
     }
   },
   methods: {
-    onNewGame() {
+    async onNewGame() {
       lastId += Math.ceil(Math.random() * 3)
-      this.gameData.push(Game.createSampleGame(lastId))
+      // eslint-disable-next-line
+      this.selectedGame = Game.createSampleGame(lastId)
+      await this.gameData.push(this.selectedGame)
+      this.selectGame(this.selectedGame.getId())
     },
     selectGame(gameId) {
       if (gameId !== this.selectedGameId) {
@@ -53,7 +56,12 @@ export default {
           document.getElementById(this.selectedGameId).style.background = "#ffffff";
         }
         this.selectedGameId = gameId;
-        this.findGame(gameId)
+        for (let i = 0; i < this.gameData.length; i++) {
+          if (this.gameData[i].getId() === gameId) {
+            // eslint-disable-next-line
+            this.selectedGame = this.gameData[i]
+          }
+        }
       } else {
         document.getElementById(this.selectedGameId).style.background = "#ffffff";
         this.selectedGameId = 0;
@@ -63,20 +71,33 @@ export default {
     hasGameSelected() {
       return this.selectedGameId !== 0
     },
-    findGame(id) {
+    updateGame(){
+      const title = document.getElementById("titleInput").value
+      const status = document.getElementById("statusInput").value
+      const rated = document.getElementById("ratedInput").checked
+      const thinkTime = document.getElementById("thinkTimeInput").value
+      const date = document.getElementById("dateInput").value
+
       for (let i = 0; i < this.gameData.length; i++) {
-        if (this.gameData[i].getId() === id) {
-          this.selectedGame = this.gameData[i]
-          console.log(typeof(this.selectedGame))
+        if (this.gameData[i].getId() === this.selectedGameId) {
+          this.gameData[i].updateGame(title, status, thinkTime, rated, date)
         }
       }
+    },
+    deleteGame(){
+      for (let i = 0; i < this.gameData.length; i++) {
+        if (this.gameData[i].getId() === this.selectedGameId) {
+          this.gameData.splice(i, 1)
+        }
+      }
+      this.selectGame(this.selectedGameId)
     }
   },
   data() {
     return {
-      selectedGameId: 0,
       gameData: [],
-      selectedGame: null
+      selectedGame: Game,
+      selectedGameId: 0,
     };
   },
   components: {

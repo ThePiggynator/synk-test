@@ -69,7 +69,12 @@ export class Game {
         return this._title
     }
     getCreatedAt(){
-        return this._createdAt.toLocaleString()
+        let now = this._createdAt;
+        let day = ("0" + now.getDate()).slice(-2);
+        let month = ("0" + (now.getMonth() + 1)).slice(-2);
+        let hour = ("0"+(now.getHours()+1)).slice(-2)
+        let min = ("0"+(now.getMinutes()+1)).slice(-2)
+        return now.getFullYear()+"-"+(month)+"-"+(day)+"T"+hour+":"+min
     }
 
     getStatus(){
@@ -81,6 +86,14 @@ export class Game {
     }
     getMaxThinkTime(){
         return this._maxThinkTime
+    }
+
+    updateGame(title, status, maxThinkTime, rated, createdAt){
+        this._title = title;
+        this._status = status;
+        this._maxThinkTime = maxThinkTime;
+        this._rated = rated;
+        this._createdAt = new Date(createdAt);
     }
 }
 
