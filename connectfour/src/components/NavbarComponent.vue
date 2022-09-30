@@ -2,22 +2,22 @@
 
   <ul class="navbarFlex">
     <div class="right">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Games</a></li>
+      <li><router-link to="/home">Home</router-link></li>
       <li class="dropdown">
-        <a href="#" class="dropbtn">Dropdown</a>
+        <a class="dropbtn">Games</a>
         <div class="dropdown-content">
-          <a href="#">All games overview</a>
+          <router-link to="/games/overview31">All games overview</router-link>
           <a href="#">Games details (comp)</a>
-          <a href="#">Games edit (router)</a>
+          <router-link to="/games/overview32">Edit games (3.2)</router-link>
+          <router-link to="/games/overview33">Edit games (3.3)</router-link>
         </div>
       </li>
       <li><a href="#">My account</a></li>
     </div>
     <div class="left">
-      <li><a href="#">Login</a></li>
+      <li><router-link to="/login">Login</router-link></li>
 
-      <li><a href="#">Signup</a></li>
+      <li><router-link to="register">Signup</router-link></li>
     </div>
   </ul>
 </template>
