@@ -60,7 +60,7 @@ export default {
         this.$router.push("/games/overview33")
       }
     },
-    
+
     selectGame(gameId) {
       if (gameId !== this.selectedGameId) {
         this.selectedGameId = gameId;
