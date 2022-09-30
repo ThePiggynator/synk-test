@@ -1,7 +1,7 @@
 
 // eslint-disable-next-line no-unused-vars
 export class Game {
-    id;
+    id = 0;
     title;
     status;
     maxThinkTime;

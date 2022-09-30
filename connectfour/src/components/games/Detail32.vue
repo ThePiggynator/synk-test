@@ -7,12 +7,12 @@
       </tr>
       <tr>
         <th>Title:</th>
-        <th><input id="titleInput" type="text" :value="this.selectedGame.getTitle()"></th>
+        <th><input id="titleInput" type="text" v-model="selectedGame._title"></th>
       </tr>
       <tr>
         <th>Status:</th>
         <th>
-          <select id="statusInput" :value="this.selectedGame.getStatus()">
+          <select id="statusInput" v-model="selectedGame._status">
             <option value="NEW">NEW</option>
             <option value="BROADCAST">BROADCAST</option>
             <option value="RUNNING">RUNNING</option>
@@ -23,20 +23,18 @@
       <tr>
         <th>Rated:</th>
         <th>
-          <input id="ratedInput" type="checkbox" v-if="this.selectedGame.getRated()" checked>
-          <input id="ratedInput" type="checkbox" v-else>
+          <input id="ratedInput" type="checkbox" v-model="selectedGame._rated">
         </th>
       </tr>
       <tr>
         <th>Max Thinking Time:</th>
-        <th><input id="thinkTimeInput" type="number" :value="this.selectedGame.getMaxThinkTime()"></th>
+        <th><input id="thinkTimeInput" type="number" v-model="selectedGame._maxThinkTime"></th>
       </tr>
       <tr>
         <th>Created at:</th>
-        <th><input id="dateInput" type="datetime-local" :value="this.selectedGame.getCreatedAt()"></th>
+        <th><input id="dateInput" type="datetime-local" v-model="selectedGame._createdAt"></th>
       </tr>
     </table><br>
-    <button @click="updateGame()">Update / save</button><br>
     <button @click="deleteGame()">Delete Game</button>
   </div>
 </template>
@@ -51,6 +49,9 @@ export default {
   props: [
       'selectedGame'
   ],
+  emits: [
+      'delete'
+  ],
   data(){
     return{
     }
@@ -61,7 +62,7 @@ export default {
     },
     deleteGame(){
       this.$emit('delete')
-    }
+    },
   }
 }
 </script>

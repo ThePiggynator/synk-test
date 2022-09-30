@@ -7,10 +7,10 @@
           <th>Title:</th>
         </tr>
         <tbody>
-        <template v-for="data in gameData" :key='data'>
-          <tr v-on:click="select(data.getId())" :id="data.getId()">
-            <th>{{ data.getId() }}</th>
-            <th>{{ data.getTitle() }}</th>
+        <template v-for="game in gameData" :key='game'>
+          <tr v-on:click="select(game._id)" :id="game._id">
+            <th>{{ game._id }}</th>
+            <th>{{ game._title }}</th>
           </tr>
         </template>
         </tbody>
@@ -18,7 +18,7 @@
       <button class="button" v-on:click="onNewGame">New game</button>
     </div>
     <template v-if="selectedGameId !== 0">
-      <router-view @update="updateGame()" @delete="deleteGame()" :selected-game="this.selectedGame"/>
+      <router-view @update="updateGame()" @delete="deleteGame()" :selected-game="selectedGame"/>
     </template>
     <template v-else>
       <h2>Select a game</h2>
@@ -57,6 +57,7 @@ export default {
         }
       } else {
         document.getElementById(this.selectedGameId).style.background = "#ffffff";
+        this.selectedGameId = 0
         this.$router.push("/games/overview33")
       }
     },
@@ -74,19 +75,7 @@ export default {
     hasGameSelected() {
       return this.selectedGameId !== 0
     },
-    updateGame(){
-      const title = document.getElementById("titleInput").value
-      const status = document.getElementById("statusInput").value
-      const rated = document.getElementById("ratedInput").checked
-      const thinkTime = document.getElementById("thinkTimeInput").value
-      const date = document.getElementById("dateInput").value
 
-      for (let i = 0; i < this.gameData.length; i++) {
-        if (this.gameData[i].getId() === this.selectedGameId) {
-          this.gameData[i].updateGame(title, status, thinkTime, rated, date)
-        }
-      }
-    },
     deleteGame(){
       for (let i = 0; i < this.gameData.length; i++) {
         if (this.gameData[i].getId() === this.selectedGameId) {
