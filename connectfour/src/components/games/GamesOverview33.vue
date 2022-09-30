@@ -8,7 +8,7 @@
         </tr>
         <tbody>
         <template v-for="data in gameData" :key='data'>
-          <tr v-on:click="selectGame(data.getId())" :id="data.getId()">
+          <tr v-on:click="select(data.getId())" :id="data.getId()">
             <th>{{ data.getId() }}</th>
             <th>{{ data.getTitle() }}</th>
           </tr>
@@ -46,21 +46,27 @@ export default {
       // eslint-disable-next-line
       this.selectedGame = Game.createSampleGame(lastId)
       await this.gameData.push(this.selectedGame)
-      this.selectGame(this.selectedGame.getId())
+      this.select(this.selectedGame.getId())
     },
-    selectGame(gameId) {
-      this.$router.push("/games/overview33/"+ gameId)
-      if (gameId !== this.selectedGameId) {
-        document.getElementById(gameId).style.background = "#42b983";
+    select(id){
+      if (id !== this.selectedGameId) {
+        this.$router.push("/games/overview33/" + id)
+        document.getElementById(id).style.background = "#42b983";
         if (this.hasGameSelected()) {
           document.getElementById(this.selectedGameId).style.background = "#ffffff";
         }
-        this.selectedGameId = gameId;
-        this.selectedGame = this.findGameById(gameId)
-
-
       } else {
         document.getElementById(this.selectedGameId).style.background = "#ffffff";
+        this.$router.push("/games/overview33")
+      }
+    },
+    
+    selectGame(gameId) {
+      if (gameId !== this.selectedGameId) {
+        this.selectedGameId = gameId;
+        this.findGameById(gameId)
+      }
+      else {
         this.selectedGameId = 0;
         this.selectedGame = null;
       }
@@ -93,7 +99,7 @@ export default {
       for (let i = 0; i < this.gameData.length; i++) {
         if (this.gameData[i].getId() === id) {
           // eslint-disable-next-line
-          return this.gameData[i]
+          this.selectedGame = this.gameData[i]
         }
       }
     }
@@ -106,9 +112,10 @@ export default {
     };
   },
   watch:{
-    '$route.params.id'(id) {
-      this.selectGame(id)
-      console.log(this.selectedGame)
+    '$route'(){
+      if (this.$route.params.id !== undefined) {
+        this.selectGame(parseInt(this.$route.params.id))
+      }
     }
   }
 }
