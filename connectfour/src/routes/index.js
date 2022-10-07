@@ -4,7 +4,9 @@ import PageNotFound from "@/components/UnknownRoute.vue";
 import GamePage31 from "@/components/games/GamesOverview31.vue";
 import GamePage32 from "@/components/games/GamesOverview32.vue";
 import GamePage33 from "@/components/games/GamesOverview33.vue";
+import GamePage34 from "@/components/games/GamesOverview34.vue";
 import Detail32 from "@/components/games/Detail32.vue";
+import Detail34 from "@/components/games/Detail34";
 
 export const router = createRouter({
     history: createWebHashHistory(),
@@ -17,7 +19,10 @@ export const router = createRouter({
                 {path: ':id', component: Detail32, props: true}
             ]
         },
-
+        {path: '/games/overview34', component: GamePage34, children: [
+                {path: ':id', component: Detail34, props: true}
+            ]
+        },
 
         {path: '/:pathMatch(.*)*', name:'pageNotFound', component: PageNotFound},
 

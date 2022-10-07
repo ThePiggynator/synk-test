@@ -11,13 +11,13 @@ export class Game {
 
 
     constructor(id, title, status, maxThinkTime, rated, createdAt, createdBy) {
-        this._id = id;
-        this._title = title;
-        this._status = status;
-        this._maxThinkTime = maxThinkTime;
-        this._rated = rated;
-        this._createdAt = createdAt;
-        this._createdBy = createdBy;
+        this.id = id;
+        this.title = title;
+        this.status = status;
+        this.maxThinkTime = maxThinkTime;
+        this.rated = rated;
+        this.createdAt = createdAt;
+        this.createdBy = createdBy;
     }
     static createSampleGame(pId){
         let id = pId;
@@ -63,13 +63,13 @@ export class Game {
     }
 
     getId(){
-        return this._id
+        return this.id
     }
     getTitle(){
-        return this._title
+        return this.title
     }
     getCreatedAt(){
-        let now = this._createdAt;
+        let now = this.createdAt;
         let day = ("0" + now.getDate()).slice(-2);
         let month = ("0" + (now.getMonth() + 1)).slice(-2);
         let hour = ("0"+(now.getHours()+1)).slice(-2)
@@ -78,22 +78,33 @@ export class Game {
     }
 
     getStatus(){
-        return this._status;
+        return this.status;
     }
 
     getRated(){
-        return this._rated
+        return this.rated
     }
     getMaxThinkTime(){
-        return this._maxThinkTime
+        return this.maxThinkTime
     }
 
-    updateGame(title, status, maxThinkTime, rated, createdAt){
-        this._title = title;
-        this._status = status;
-        this._maxThinkTime = maxThinkTime;
-        this._rated = rated;
-        this._createdAt = new Date(createdAt);
+    updateGame(game){
+        this.title = game.title;
+        this.status = game.status;
+        this.maxThinkTime = game.maxThinkTime;
+        this.rated = game.rated;
+        this.createdAt = game.createdAt;
+    }
+    static copyConstructor(game){
+       return new Game(
+           game.id,
+           game.title,
+           game.status,
+           game.maxThinkTime,
+           game.rated,
+           game.createdAt,
+           game.createdBy,
+       )
     }
 }
 

@@ -7,12 +7,12 @@
       </tr>
       <tr>
         <th>Title:</th>
-        <th><input id="titleInput" type="text" v-model="selectedGame._title"></th>
+        <th><input id="titleInput" type="text" v-model="selectedGame.title"></th>
       </tr>
       <tr>
         <th>Status:</th>
         <th>
-          <select id="statusInput" v-model="selectedGame._status">
+          <select id="statusInput" v-model="selectedGame.status">
             <option value="NEW">NEW</option>
             <option value="BROADCAST">BROADCAST</option>
             <option value="RUNNING">RUNNING</option>
@@ -23,16 +23,16 @@
       <tr>
         <th>Rated:</th>
         <th>
-          <input id="ratedInput" type="checkbox" v-model="selectedGame._rated">
+          <input id="ratedInput" type="checkbox" v-model="selectedGame.rated">
         </th>
       </tr>
       <tr>
         <th>Max Thinking Time:</th>
-        <th><input id="thinkTimeInput" type="number" v-model="selectedGame._maxThinkTime"></th>
+        <th><input id="thinkTimeInput" type="number" v-model="selectedGame.maxThinkTime"></th>
       </tr>
       <tr>
         <th>Created at:</th>
-        <th><input id="dateInput" type="datetime-local" v-model="selectedGame._createdAt"></th>
+        <th><input id="dateInput" type="datetime-local" v-model="selectedGame.createdAt"></th>
       </tr>
     </table><br>
     <button @click="deleteGame()">Delete Game</button>

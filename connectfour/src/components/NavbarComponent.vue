@@ -10,6 +10,7 @@
           <a href="#">Games details (comp)</a>
           <router-link to="/games/overview32">Edit games (3.2)</router-link>
           <router-link to="/games/overview33">Edit games (3.3)</router-link>
+          <router-link to="/games/overview34">Edit games (3.4)</router-link>
         </div>
       </li>
       <li><a href="#">My account</a></li>

@@ -18,7 +18,7 @@
       <button class="button" v-on:click="onNewGame">New game</button>
     </div>
     <template v-if="selectedGameId !== 0">
-      <router-view @update="updateGame()" @delete="deleteGame()" :selected-game="selectedGame"/>
+      <router-view @unselect="unselectEdit()" @delete="deleteGame()" :selected-game="selectedGame"/>
     </template>
     <template v-else>
       <h2>Select a game</h2>
@@ -31,7 +31,7 @@ import {Game} from '@/models/Game.js';
 
 let lastId = 30000;
 export default {
-  name: "GamesOverview33",
+  name: "GamesOverview34",
 
   created() {
     for (let i = 0; i < 8; i++) {
@@ -50,7 +50,7 @@ export default {
     },
     select(id){
       if (id !== this.selectedGameId) {
-        this.$router.push("/games/overview33/" + id)
+        this.$router.push("/games/overview34/" + id)
         document.getElementById(id).style.background = "#42b983";
         if (this.hasGameSelected()) {
           document.getElementById(this.selectedGameId).style.background = "#ffffff";
@@ -58,10 +58,9 @@ export default {
       } else {
         document.getElementById(this.selectedGameId).style.background = "#ffffff";
         this.selectedGameId = 0
-        this.$router.push("/games/overview33")
+        this.$router.push("/games/overview34")
       }
     },
-
     selectGame(gameId) {
       if (gameId !== this.selectedGameId) {
         this.selectedGameId = gameId;
@@ -75,7 +74,6 @@ export default {
     hasGameSelected() {
       return this.selectedGameId !== 0
     },
-
     deleteGame(){
       for (let i = 0; i < this.gameData.length; i++) {
         if (this.gameData[i].getId() === this.selectedGameId) {
@@ -91,6 +89,12 @@ export default {
           this.selectedGame = this.gameData[i]
         }
       }
+    },
+    unselectEdit(){
+      document.getElementById(this.selectedGameId).style.background = "#ffffff";
+      this.selectedGameId = 0
+      this.selectedGame = null
+      this.$router.push("/games/overview34")
     }
   },
   data() {
