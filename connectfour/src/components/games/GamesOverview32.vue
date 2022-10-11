@@ -58,7 +58,6 @@ export default {
         this.selectedGameId = gameId;
         for (let i = 0; i < this.gameData.length; i++) {
           if (this.gameData[i].getId() === gameId) {
-            // eslint-disable-next-line
             this.selectedGame = this.gameData[i]
           }
         }

@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     saveGame() {
-      this.selectedGame.updateGame(this.newGame)
+      Game.updateGame(this.selectedGame, this.newGame)
       this.$emit('unselect')
     },
     clearGame(){
@@ -92,28 +92,7 @@ export default {
       this.$emit('unselect')
     },
     gameHasChanges(){
-      if (this.newGame.title !== this.selectedGame.title){
-        this.hasChanged = true
-        return this.hasChanged;
-      }
-      if (this.newGame.status !== this.selectedGame.status){
-        this.hasChanged = true
-        return this.hasChanged;
-      }
-      if (this.newGame.rated !== this.selectedGame.rated){
-        this.hasChanged = true
-        return this.hasChanged;
-      }
-      if (this.newGame.maxThinkTime !== this.selectedGame.maxThinkTime){
-        this.hasChanged = true
-        return this.hasChanged;
-      }
-      if (this.newGame.createdAt !== this.selectedGame.createdAt){
-        this.hasChanged = true
-        return this.hasChanged;
-      }
-      this.hasChanged = false
-      return this.hasChanged;
+      return Game.gameHasChanges(this.selectedGame, this.newGame)
     }
   },
   created() {

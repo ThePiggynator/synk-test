@@ -88,12 +88,8 @@ export class Game {
         return this.maxThinkTime
     }
 
-    updateGame(game){
-        this.title = game.title;
-        this.status = game.status;
-        this.maxThinkTime = game.maxThinkTime;
-        this.rated = game.rated;
-        this.createdAt = game.createdAt;
+    static updateGame(oldGame, newGame){
+        Object.assign(oldGame, newGame)
     }
     static copyConstructor(game){
        return new Game(
@@ -105,6 +101,16 @@ export class Game {
            game.createdAt,
            game.createdBy,
        )
+    }
+    static gameHasChanges(oldGame, newGame){
+        if (oldGame.title !== newGame.title) return true;
+        if (oldGame.status !== newGame.status) return true;
+        if (oldGame.maxThinkTime !== newGame.maxThinkTime) return true;
+        if (oldGame.rated !== newGame.rated) return true;
+        if (oldGame.createdAt !== newGame.createdAt) return true;
+
+
+        return false;
     }
 }
 
