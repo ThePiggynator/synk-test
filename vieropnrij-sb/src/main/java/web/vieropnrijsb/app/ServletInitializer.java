@@ -1,6 +1,5 @@
-package team13.vieropnrijsb;
+package web.vieropnrijsb.app;
 
-import app.VieropnrijSbApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
