@@ -70,4 +70,54 @@ public class GamesRepositoryMock implements GamesRepository {
     public List<Game> findAll() {
         return games;
     }
+
+    @Override
+    public Game findById(long id) {
+
+        int realId = (int) id;
+
+        for (Game g: games) {
+            if (g.getId() == realId){
+                return g;
+            }
+
+        }
+       return null;
+    }
+
+    @Override
+    public Game deleteById(long id) {
+
+        int realId = (int) id;
+
+        for (Game g: games) {
+            if (g.getId() == realId){
+                games.remove(g);
+                return g;
+            }
+
+        }
+        return null;
+    }
+
+    @Override
+    public Game save(Game game) {
+
+        int id = game.getId();
+
+        if (id == 0){
+            game.setId((int) Math.ceil(Math.random() * 10000));
+            games.add(game);
+            return game;
+        }
+
+        for (Game g: games) {
+            if (g.getId() == id){
+                Game.updateGame(g, game);
+                return g;
+            }
+
+        }
+        return null;
+    }
 }

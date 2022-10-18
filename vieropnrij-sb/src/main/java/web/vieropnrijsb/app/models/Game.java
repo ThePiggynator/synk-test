@@ -1,6 +1,5 @@
 package web.vieropnrijsb.app.models;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +60,13 @@ public class Game {
 
     public String getCreatedBy() {
         return createdBy;
+    }
+
+   public static void updateGame(Game oldGame, Game newGame){
+        oldGame.setTitle(newGame.getTitle());
+        oldGame.setRated(newGame.isRated());
+        oldGame.setStatus(newGame.getStatus());
+        oldGame.setMaxThinkTime(newGame.getMaxThinkTime());
     }
 
     public void setId(int id) {
