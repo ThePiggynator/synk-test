@@ -2,6 +2,8 @@ package web.vieropnrijsb.app.repositories;
 
 import web.vieropnrijsb.app.models.Game;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +62,9 @@ public class GamesRepositoryMock implements GamesRepository {
         createdAt = new Date();
         createdAt.setDate(createdAt.getDate() - randomNum);
 
-        return new Game(id, title, status, maxThinkTime, rated, createdAt, createdBy);
+        LocalDate createdAt2 = createdAt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        return new Game(id, title, status, maxThinkTime, rated, createdAt2, createdBy);
     }
     private void updateId(){
         this.id += Math.ceil(3);
@@ -105,19 +109,13 @@ public class GamesRepositoryMock implements GamesRepository {
 
         int id = game.getId();
 
-        if (id == 0){
-            game.setId((int) Math.ceil(Math.random() * 10000));
-            games.add(game);
-            return game;
-        }
-
         for (Game g: games) {
             if (g.getId() == id){
                 Game.updateGame(g, game);
                 return g;
             }
-
         }
-        return null;
+        games.add(game);
+        return game;
     }
 }

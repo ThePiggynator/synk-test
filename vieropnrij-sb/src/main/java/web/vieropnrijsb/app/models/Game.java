@@ -1,5 +1,6 @@
 package web.vieropnrijsb.app.models;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -9,10 +10,10 @@ public class Game {
     String status;
     int maxThinkTime;
     boolean rated;
-    Date createdAt;
+    LocalDate createdAt;
     String createdBy;
 
-    public Game(int id, String title, String status, int maxThinkTime, boolean rated, Date createdAt, String createdBy) {
+    public Game(int id, String title, String status, int maxThinkTime, boolean rated, LocalDate createdAt, String createdBy) {
         this.id = id;
         this.title = title;
         this.status = status;
@@ -25,6 +26,16 @@ public class Game {
     public Game(int id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    public Game(String title, String status, int maxThinkTime, boolean rated, LocalDate createdAt, String createdBy) {
+        this.id = (int)Math.ceil(Math.random()*100000);
+        this.title = title;
+        this.status = status;
+        this.maxThinkTime = maxThinkTime;
+        this.rated = rated;
+        this.createdAt = createdAt;
+        this.createdBy = createdBy;
     }
 
     static public List<Game> getTestGames(){
@@ -54,7 +65,7 @@ public class Game {
         return rated;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
@@ -89,7 +100,7 @@ public class Game {
         this.rated = rated;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
