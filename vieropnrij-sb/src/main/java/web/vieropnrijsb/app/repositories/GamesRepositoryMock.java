@@ -91,7 +91,6 @@ public class GamesRepositoryMock implements GamesRepository {
 
     @Override
     public Game deleteById(long id) {
-
         int realId = (int) id;
 
         for (Game g: games) {

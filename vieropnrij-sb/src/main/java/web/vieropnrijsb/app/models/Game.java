@@ -1,9 +1,10 @@
 package web.vieropnrijsb.app.models;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-
 public class Game {
     int id;
     String title;
@@ -12,6 +13,8 @@ public class Game {
     boolean rated;
     LocalDate createdAt;
     String createdBy;
+
+
 
     public Game(int id, String title, String status, int maxThinkTime, boolean rated, LocalDate createdAt, String createdBy) {
         this.id = id;
@@ -36,6 +39,10 @@ public class Game {
         this.rated = rated;
         this.createdAt = createdAt;
         this.createdBy = createdBy;
+    }
+
+    static public class Public{
+
     }
 
     static public List<Game> getTestGames(){
