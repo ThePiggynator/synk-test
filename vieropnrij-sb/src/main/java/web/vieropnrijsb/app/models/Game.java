@@ -1,20 +1,23 @@
 package web.vieropnrijsb.app.models;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import web.vieropnrijsb.app.views.CustomView;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 public class Game {
-    int id;
-    String title;
-    String status;
-    int maxThinkTime;
-    boolean rated;
-    LocalDate createdAt;
-    String createdBy;
-
-
+    @JsonView(CustomView.shallow.class)
+    private int id;
+    @JsonView(CustomView.shallow.class)
+    private String title;
+    @JsonView(CustomView.summary.class)
+    private String status;
+    @JsonView(CustomView.summary.class)
+    private int maxThinkTime;
+    private boolean rated;
+    private LocalDate createdAt;
+    private String createdBy;
 
     public Game(int id, String title, String status, int maxThinkTime, boolean rated, LocalDate createdAt, String createdBy) {
         this.id = id;
@@ -39,10 +42,6 @@ public class Game {
         this.rated = rated;
         this.createdAt = createdAt;
         this.createdBy = createdBy;
-    }
-
-    static public class Public{
-
     }
 
     static public List<Game> getTestGames(){

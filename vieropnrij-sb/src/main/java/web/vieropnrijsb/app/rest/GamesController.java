@@ -1,42 +1,46 @@
 package web.vieropnrijsb.app.rest;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import web.vieropnrijsb.app.exceptions.PreConditionFailed;
+import web.vieropnrijsb.app.exceptions.ResourceNotFound;
 import web.vieropnrijsb.app.models.Game;
-import web.vieropnrijsb.app.models.GameDetails;
-import web.vieropnrijsb.app.repositories.GamesRepositoryMock;
+import web.vieropnrijsb.app.repositories.GamesRepository;
+import web.vieropnrijsb.app.views.CustomView;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.logging.Filter;
 
 @RestController
+@RequestMapping("/games")
 public class GamesController {
 
-    GamesRepositoryMock gamesRepositoryMock = new GamesRepositoryMock();
+    @Autowired
+    private GamesRepository gamesRepository;
 
-    @GetMapping("/games")
+    @GetMapping("")
     public List<Game> getTestGames() {
         return Game.getTestGames();
     }
 
-    @GetMapping("/games/all")
+    @GetMapping("/all")
     public List<Game> getExampleGames() {
-        return gamesRepositoryMock.findAll();
+        return gamesRepository.findAll();
     }
 
-    @GetMapping("/games/{id}")
-    public Game getById(@PathVariable String id) throws Exception {
-        Game game = gamesRepositoryMock.findById(Long.parseLong(id));
+    @GetMapping("/{id}")
+    public Game getById(@PathVariable String id) throws ResourceNotFound {
+        Game game = gamesRepository.findById(Integer.parseInt(id));
 
         if (game != null){
             return game;
         }
-        throw new Exception("ResourceNotFound");
+        throw new ResourceNotFound();
     }
 
-    @PostMapping("/games/save")
+    @PostMapping("/save")
     public Game create(@RequestBody Map<String, String> body) {
         int id = Integer.parseInt(body.get("id"));
         String title = body.get("title");
@@ -46,14 +50,14 @@ public class GamesController {
         LocalDate createdAt =  LocalDate.parse(body.get("createdAt"));
         String createdBy = body.get("createdBy");
         if (id == 0){
-            gamesRepositoryMock.save(new Game(title, status,maxThinkTime, rated, createdAt, createdBy));
+            gamesRepository.save(new Game(title, status,maxThinkTime, rated, createdAt, createdBy));
             return new Game(title, status,maxThinkTime, rated, createdAt, createdBy);
         }
-        gamesRepositoryMock.save(new Game(id,title, status,maxThinkTime, rated, createdAt, createdBy));
+        gamesRepository.save(new Game(id,title, status,maxThinkTime, rated, createdAt, createdBy));
         return new Game(id,title, status,maxThinkTime, rated, createdAt, createdBy);
     }
-    @PutMapping("games/{id}")
-    public Game save(@RequestBody Map<String, String> body, @PathVariable String id ) throws Exception {
+    @PutMapping("/{id}")
+    public Game save(@RequestBody Map<String, String> body, @PathVariable String id ) throws ResourceNotFound, PreConditionFailed{
 
         int gameId = Integer.parseInt(body.get("id"));
         String title = body.get("title");
@@ -65,27 +69,23 @@ public class GamesController {
 
         Game game = new Game(gameId,title, status,maxThinkTime, rated, createdAt, createdBy);
 
-        if (gamesRepositoryMock.findById(gameId) == null) throw new Exception("ResourceNotFound");
+        if (gamesRepository.findById(gameId) == null) throw new ResourceNotFound("Resource Not Found");
 
         if (Integer.parseInt(id) == gameId){
-            gamesRepositoryMock.save(game);
+            gamesRepository.save(game);
             return game;
         }
-        throw new Exception("IDs do not match");
+        throw new PreConditionFailed("IDs do not match");
     }
-    @DeleteMapping("games/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable String id ){
-        gamesRepositoryMock.deleteById(Long.parseLong(id));
+        gamesRepository.deleteById(Integer.parseInt(id));
     }
+    @JsonView(CustomView.summary.class)
+    @GetMapping("/summary")
+    public List<Game> gameSummary(){
+        List<Game> allGames = gamesRepository.findAll();
 
-    @GetMapping("games/summary")
-    public List<GameDetails> gameSummary(){
-        List<Game> allGames = gamesRepositoryMock.findAll();
-        List<GameDetails> gameDetails = new ArrayList<>();
-        for (Game game:allGames) {
-            gameDetails.add(new GameDetails(game));
-        }
-
-        return gameDetails;
+        return allGames;
     }
 }

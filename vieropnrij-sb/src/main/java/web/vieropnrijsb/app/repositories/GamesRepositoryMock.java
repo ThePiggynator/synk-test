@@ -1,5 +1,6 @@
 package web.vieropnrijsb.app.repositories;
 
+import org.springframework.stereotype.Component;
 import web.vieropnrijsb.app.models.Game;
 
 import java.time.LocalDate;
@@ -8,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GamesRepositoryMock implements GamesRepository {
+@Component
+public class GamesRepositoryMock implements GamesRepository{
 
     private List<Game> games = new ArrayList<Game>();
     private int id = 30000;
-
     public GamesRepositoryMock() {
 
         for (int i = 0; i < 7; i++) {
@@ -70,12 +71,9 @@ public class GamesRepositoryMock implements GamesRepository {
         this.id += Math.ceil(3);
     }
 
-    @Override
     public List<Game> findAll() {
         return games;
     }
-
-    @Override
     public Game findById(long id) {
 
         int realId = (int) id;
@@ -88,8 +86,6 @@ public class GamesRepositoryMock implements GamesRepository {
         }
        return null;
     }
-
-    @Override
     public Game deleteById(long id) {
         int realId = (int) id;
 
@@ -103,7 +99,6 @@ public class GamesRepositoryMock implements GamesRepository {
         return null;
     }
 
-    @Override
     public Game save(Game game) {
 
         int id = game.getId();
