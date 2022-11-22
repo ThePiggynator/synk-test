@@ -5,8 +5,10 @@ import GamePage31 from "@/components/games/GamesOverview31.vue";
 import GamePage32 from "@/components/games/GamesOverview32.vue";
 import GamePage33 from "@/components/games/GamesOverview33.vue";
 import GamePage34 from "@/components/games/GamesOverview34.vue";
+import GamePage37 from "@/components/games/GamesOverview37.vue";
 import Detail32 from "@/components/games/Detail32.vue";
 import Detail34 from "@/components/games/Detail34";
+import Detail37 from "@/components/games/Detail37";
 
 export const router = createRouter({
     history: createWebHashHistory(),
@@ -21,6 +23,10 @@ export const router = createRouter({
         },
         {path: '/games/overview34', component: GamePage34, children: [
                 {path: ':id', component: Detail34, props: true}
+            ]
+        },
+        {path: '/games/overview37', component: GamePage37, children: [
+                {path: ':id', component: Detail37, props: true}
             ]
         },
 

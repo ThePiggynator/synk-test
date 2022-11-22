@@ -25,7 +25,7 @@ public class GamesRepositoryMock implements GamesRepository{
     public static Game createSampleGame(long pId) {
 
         int id = (int) pId;
-        String title = "Sample game: " + Math.ceil(Math.random() * 10000);
+        String title = "Sample game: " + (int)Math.ceil(Math.random() * 10000);
         String status = "";
         int maxThinkTime = (int) Math.floor(Math.random() * 100);
         boolean rated = false;

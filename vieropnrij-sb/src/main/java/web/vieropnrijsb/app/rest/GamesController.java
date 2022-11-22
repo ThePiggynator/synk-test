@@ -2,8 +2,12 @@ package web.vieropnrijsb.app.rest;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import web.vieropnrijsb.app.exceptions.PreConditionFailed;
 import web.vieropnrijsb.app.exceptions.ResourceNotFound;
 import web.vieropnrijsb.app.models.Game;
@@ -20,12 +24,22 @@ public class GamesController {
     @Autowired
     private GamesRepository gamesRepository;
 
-    @GetMapping("")
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*");
+            }
+        };
+    }
+
+    @GetMapping("/test")
     public List<Game> getTestGames() {
         return Game.getTestGames();
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     public List<Game> getExampleGames() {
         return gamesRepository.findAll();
     }
