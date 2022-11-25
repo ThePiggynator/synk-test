@@ -32,8 +32,12 @@ export default class GamesAdaptor {
         //     url: "",
         // })
         console.log("Finding all games...")
+        let array = [];
         let games = await this.fetchJson(this.resourcesUrl);
-        return games?.map(Game.copyConstructor())
+        for (let i = 0; i < games.length; i++) {
+            array.push(Game.copyConstructor(games[i]))
+        }
+        return array;
     }
     async findById(id){
         let res = await this.fetchJson(this.resourcesUrl + "/" + id);

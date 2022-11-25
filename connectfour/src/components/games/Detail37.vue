@@ -73,6 +73,7 @@ export default {
   },
   methods: {
     saveGame() {
+      this.gamesServices.saveGame(this.selectedGame)
       Game.updateGame(this.selectedGame, this.newGame)
       this.$emit('unselect')
     },
@@ -84,7 +85,8 @@ export default {
       this.newGame.createdAt = null
     },
     deleteGame() {
-      this.$emit('delete')
+      this.gamesServices.deleteGame(this.selectedGame.id);
+      this.$emit('delete');
     },
     resetGame(){
       this.newGame = Game.copyConstructor(this.selectedGame)

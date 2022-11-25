@@ -35,10 +35,7 @@ export default {
   inject: ['gamesServices'],
 
   async created() {
-    let tempArray = await this.gamesServices.findAll()
-    for (let i = 0; i < tempArray.size(); i++) {
-      this.gameData.push(new Game(tempArray[i]))
-    }
+    this.gameData = await this.gamesServices.findAll();
   },
   methods: {
     async onNewGame() {
