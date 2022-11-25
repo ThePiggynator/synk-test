@@ -15,6 +15,7 @@ import web.vieropnrijsb.app.repositories.GamesRepository;
 import web.vieropnrijsb.app.views.CustomView;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @RestController
@@ -52,7 +53,7 @@ public class GamesController {
         String status = body.get("status");
         int maxThinkTime = Integer.parseInt(body.get("maxThinkTime"));
         boolean rated =  Boolean.parseBoolean(body.get("rated"));
-        LocalDate createdAt =  LocalDate.parse(body.get("createdAt"));
+        LocalDate createdAt =  new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String createdBy = body.get("createdBy");
         if (id == 0){
             gamesRepository.save(new Game(title, status,maxThinkTime, rated, createdAt, createdBy));

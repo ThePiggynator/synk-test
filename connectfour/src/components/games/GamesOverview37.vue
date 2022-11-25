@@ -41,7 +41,8 @@ export default {
       let temp = new Game(0)
       // eslint-disable-next-line
       this.selectedGame = await this.gamesServices.saveGame(temp)
-      // this.select(this.selectedGame.getId())
+      await this.gameData.push(this.selectedGame)
+      this.select(this.selectedGame.getId())
     },
     select(id){
       if (id !== this.selectedGameId) {

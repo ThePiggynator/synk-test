@@ -55,7 +55,7 @@ export default class GamesAdaptor {
         // })
         let res;
         if (game.id != 0) {
-            res = this.axios({
+            res = await this.axios({
                 method: 'PUT',
                 url: "/" + game.id,
                 data: {
@@ -70,7 +70,7 @@ export default class GamesAdaptor {
             })
         }
         else {
-            res = this.axios({
+            res = await this.axios({
                 method: 'POST',
                 url: "/save",
                 data: {
@@ -83,7 +83,9 @@ export default class GamesAdaptor {
                     createdBy: ""
                 }
             })
+            return Game.copyConstructor(res.data)
         }
+        console.log(res.data)
         return res.data;
     }
 
