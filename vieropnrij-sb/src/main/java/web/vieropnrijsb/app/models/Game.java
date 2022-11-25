@@ -33,9 +33,13 @@ public class Game {
         this.id = id;
         this.title = title;
     }
+    public Game(int id) {
+        this.id = id;
+    }
+
 
     public Game(String title, String status, int maxThinkTime, boolean rated, LocalDate createdAt, String createdBy) {
-        this.id = (int)Math.ceil(Math.random()*100000);
+        this.id = (int)Math.ceil(Math.random()*1000000);
         this.title = title;
         this.status = status;
         this.maxThinkTime = maxThinkTime;

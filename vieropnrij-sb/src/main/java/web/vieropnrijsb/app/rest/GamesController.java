@@ -19,20 +19,11 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/games")
+@CrossOrigin("/**")
 public class GamesController {
 
     @Autowired
     private GamesRepository gamesRepository;
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*");
-            }
-        };
-    }
 
     @GetMapping("/test")
     public List<Game> getTestGames() {

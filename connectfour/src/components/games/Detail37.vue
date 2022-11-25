@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     saveGame() {
-      this.gamesServices.saveGame(this.selectedGame)
+      this.gamesServices.saveGame(this.newGame)
       Game.updateGame(this.selectedGame, this.newGame)
       this.$emit('unselect')
     },

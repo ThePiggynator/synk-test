@@ -19,6 +19,7 @@ export class Game {
         this.createdAt = createdAt;
         this.createdBy = createdBy;
     }
+
     static createSampleGame(pId){
         let id = pId;
         let title = "Sample game: " + Math.ceil(Math.random() * 10000);

@@ -5,6 +5,7 @@ import axiosImport from "axios";
 export default class GamesAdaptor {
     axios;
     resourcesUrl;
+
     constructor(resourcesUrl) {
         this.resourcesUrl = resourcesUrl;
         this.axios = axiosImport.create({
@@ -14,18 +15,18 @@ export default class GamesAdaptor {
         });
         console.log("Created games adaptor for: " + resourcesUrl);
     }
-    async fetchJson(url, options = null){
+
+    async fetchJson(url, options = null) {
         let res = await fetch(url, options);
-        if (res.ok){
+        if (res.ok) {
             return res.json();
-        }
-        else {
+        } else {
             console.log("Fetch failed")
             return null;
         }
     }
 
-    async findAll(){
+    async findAll() {
 
         // let res = await this.axios({
         //     method: 'GET',
@@ -39,30 +40,57 @@ export default class GamesAdaptor {
         }
         return array;
     }
-    async findById(id){
+
+    async findById(id) {
         let res = await this.fetchJson(this.resourcesUrl + "/" + id);
         return res;
     }
-    async saveGame(game){
-        let res = this.axios({
-            method: 'PUT',
-            url: "/save",
-            data: {
-                id: game.id,
-                title: game.title,
-                status: game.status,
-                maxThinkTime: game.maxThinkTime,
-                rated : game.rated,
-                createdAt: game.createdAt,
-                createdBy: game.createdBy
-            }
-        })
+
+    async saveGame(game) {
+        // let resttest = await fetch('/save', {
+        //     method: 'PUT',
+        //     body: {
+        //
+        //     }
+        // })
+        let res;
+        if (game.id != 0) {
+            res = this.axios({
+                method: 'PUT',
+                url: "/" + game.id,
+                data: {
+                    id: game.id,
+                    title: game.title,
+                    status: game.status,
+                    maxThinkTime: game.maxThinkTime,
+                    rated: game.rated,
+                    createdAt: game.createdAt,
+                    createdBy: game.createdBy
+                }
+            })
+        }
+        else {
+            res = this.axios({
+                method: 'POST',
+                url: "/save",
+                data: {
+                    id: 0,
+                    title: "",
+                    status: "",
+                    maxThinkTime: 0,
+                    rated: false,
+                    createdAt: "0-0-0000",
+                    createdBy: ""
+                }
+            })
+        }
         return res.data;
     }
-    async deleteGame(id){
+
+    async deleteGame(id) {
         let res = this.axios({
             method: 'DELETE',
-            url: "/"+id,
+            url: "/" + id,
         })
         return res.data;
     }

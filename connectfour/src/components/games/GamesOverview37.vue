@@ -29,7 +29,6 @@
 <script>
 import {Game} from '@/models/Game.js';
 
-let lastId = 30000;
 export default {
   name: "GamesOverview37",
   inject: ['gamesServices'],
@@ -39,11 +38,10 @@ export default {
   },
   methods: {
     async onNewGame() {
-      lastId += Math.ceil(Math.random() * 3)
+      let temp = new Game(0)
       // eslint-disable-next-line
-      this.selectedGame = Game.createSampleGame(lastId)
-      await this.gameData.push(this.selectedGame)
-      this.select(this.selectedGame.getId())
+      this.selectedGame = await this.gamesServices.saveGame(temp)
+      // this.select(this.selectedGame.getId())
     },
     select(id){
       if (id !== this.selectedGameId) {
