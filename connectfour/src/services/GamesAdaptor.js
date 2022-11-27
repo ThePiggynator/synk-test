@@ -15,35 +15,26 @@ export default class GamesAdaptor {
         });
         console.log("Created games adaptor for: " + resourcesUrl);
     }
-
-    async fetchJson(url, options = null) {
-        let res = await fetch(url, options);
-        if (res.ok) {
-            return res.json();
-        } else {
-            console.log("Fetch failed")
-            return null;
-        }
-    }
-
     async findAll() {
 
-        // let res = await this.axios({
-        //     method: 'GET',
-        //     url: "",
-        // })
         console.log("Finding all games...")
         let array = [];
-        let games = await this.fetchJson(this.resourcesUrl);
-        for (let i = 0; i < games.length; i++) {
-            array.push(Game.copyConstructor(games[i]))
+        let res = await this.axios({
+            method: 'GET',
+            url: ""
+        })
+        for (let i = 0; i < res.data.length; i++) {
+            array.push(Game.copyConstructor(res.data[i]))
         }
         return array;
     }
 
     async findById(id) {
-        let res = await this.fetchJson(this.resourcesUrl + "/" + id);
-        return res;
+        let res = await this.axios({
+            method: 'GET',
+            url: "/"+id
+        })
+        return res.data;
     }
 
     async saveGame(game) {
