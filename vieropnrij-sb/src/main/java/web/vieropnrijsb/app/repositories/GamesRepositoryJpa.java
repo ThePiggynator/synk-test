@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import web.vieropnrijsb.app.models.Game;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 
 public interface GamesRepositoryJpa extends JpaRepository<Game, Integer>{
 

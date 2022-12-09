@@ -82,7 +82,7 @@ public class GamesController {
         if (gamesRepository.findById(gameId) == null) throw new ResourceNotFound("Resource Not Found");
 
         if (Integer.parseInt(id) == gameId){
-            gamesRepository.save(game);
+            gamesRepositoryJpa.save(title, status,maxThinkTime, rated, createdAt.toString(), createdBy);
             return game;
         }
         throw new PreConditionFailed("IDs do not match");
