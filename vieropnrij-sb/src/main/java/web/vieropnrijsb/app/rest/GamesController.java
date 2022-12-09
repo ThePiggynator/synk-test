@@ -12,6 +12,7 @@ import web.vieropnrijsb.app.exceptions.PreConditionFailed;
 import web.vieropnrijsb.app.exceptions.ResourceNotFound;
 import web.vieropnrijsb.app.models.Game;
 import web.vieropnrijsb.app.repositories.GamesRepository;
+import web.vieropnrijsb.app.repositories.GamesRepositoryJpa;
 import web.vieropnrijsb.app.views.CustomView;
 
 import java.time.LocalDate;
@@ -25,6 +26,9 @@ public class GamesController {
 
     @Autowired
     private GamesRepository gamesRepository;
+
+    @Autowired
+    private GamesRepositoryJpa gamesRepositoryJpa;
 
     @GetMapping("/test")
     public List<Game> getTestGames() {

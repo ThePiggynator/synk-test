@@ -3,11 +3,17 @@ package web.vieropnrijsb.app.models;
 import com.fasterxml.jackson.annotation.JsonView;
 import web.vieropnrijsb.app.views.CustomView;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
+@Entity
+@Table
 public class Game {
     @JsonView(CustomView.shallow.class)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @JsonView(CustomView.shallow.class)
     private String title;
@@ -36,7 +42,8 @@ public class Game {
     public Game(int id) {
         this.id = id;
     }
-
+    public Game() {
+    }
 
     public Game(String title, String status, int maxThinkTime, boolean rated, LocalDate createdAt, String createdBy) {
         this.id = (int)Math.ceil(Math.random()*1000000);
