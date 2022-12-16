@@ -43,13 +43,10 @@ public class GamesJPARepository
     }
 
 
-
     @Override
     public Game deleteById(long id) {
         Game game = this.findById(id);
-        TypedQuery<Game> query =
-                this.entityManager.createQuery(
-                        "DELETE FROM Game g WHERE g.id = "+id, Game.class);
+        this.entityManager.remove(findById(id));
         return game;
     }
 }

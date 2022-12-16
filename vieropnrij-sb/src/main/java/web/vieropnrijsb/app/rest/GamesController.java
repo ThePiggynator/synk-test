@@ -26,10 +26,10 @@ import java.util.*;
 public class GamesController {
 
     @Autowired
-    private GamesRepository gamesRepository;
+    private EntityRepository<Game> gamesRepository;
 
-    @Autowired
-    private EntityRepository<Game> gamesJPARepository;
+//    @Autowired
+//    private EntityRepository<Game> gamesJPARepository;
 
     @GetMapping("/test")
     public List<Game> getTestGames() {
@@ -51,39 +51,22 @@ public class GamesController {
         throw new ResourceNotFound();
     }
 
-    @PostMapping("/save")
-    public Game create(@RequestBody Map<String, String> body) {
-        int id = Integer.parseInt(body.get("id"));
-        String title = body.get("title");
-        String status = body.get("status");
-        int maxThinkTime = Integer.parseInt(body.get("maxThinkTime"));
-        boolean rated =  Boolean.parseBoolean(body.get("rated"));
-        LocalDate createdAt =  new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        String createdBy = body.get("createdBy");
-        if (id == 0){
-            gamesRepository.save(new Game(title, status,maxThinkTime, rated, createdAt, createdBy));
-            return new Game(title, status,maxThinkTime, rated, createdAt, createdBy);
+    @PostMapping("/")
+    public Game create(@RequestBody Game game) {
+        if (game.getId() == 0){
+            gamesRepository.save(game);
+            return game;
         }
-        gamesRepository.save(new Game(id,title, status,maxThinkTime, rated, createdAt, createdBy));
-        return new Game(id,title, status,maxThinkTime, rated, createdAt, createdBy);
+        gamesRepository.save(game);
+        return game;
     }
     @PutMapping("/{id}")
-    public Game save(@RequestBody Map<String, String> body, @PathVariable String id ) throws ResourceNotFound, PreConditionFailed{
+    public Game save(@RequestBody Game game, @PathVariable int id ) throws ResourceNotFound, PreConditionFailed{
 
-        int gameId = Integer.parseInt(body.get("id"));
-        String title = body.get("title");
-        String status = body.get("status");
-        int maxThinkTime = Integer.parseInt(body.get("maxThinkTime"));
-        boolean rated =  Boolean.parseBoolean(body.get("rated"));
-        LocalDate createdAt =  LocalDate.parse(body.get("createdAt"));
-        String createdBy = body.get("createdBy");
+        if (gamesRepository.findById(game.getId()) == null) throw new ResourceNotFound("Resource Not Found");
 
-        Game game = new Game(gameId,title, status,maxThinkTime, rated, createdAt, createdBy);
-
-        if (gamesJPARepository.findById(gameId) == null) throw new ResourceNotFound("Resource Not Found");
-
-        if (Integer.parseInt(id) == gameId){
-            gamesJPARepository.save(game);
+        if (id == game.getId()){
+            gamesRepository.save(game);
             return game;
         }
         throw new PreConditionFailed("IDs do not match");
@@ -92,6 +75,7 @@ public class GamesController {
     public void delete(@PathVariable String id ){
         gamesRepository.deleteById(Integer.parseInt(id));
     }
+
     @JsonView(CustomView.summary.class)
     @GetMapping("/summary")
     public List<Game> gameSummary(){
