@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class GamesRepositoryMock implements GamesRepository{
+public class GamesRepositoryMock implements GamesRepository {
 
     private List<Game> games = new ArrayList<Game>();
     private int id = 30000;

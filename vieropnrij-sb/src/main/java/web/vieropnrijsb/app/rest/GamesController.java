@@ -11,8 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import web.vieropnrijsb.app.exceptions.PreConditionFailed;
 import web.vieropnrijsb.app.exceptions.ResourceNotFound;
 import web.vieropnrijsb.app.models.Game;
+import web.vieropnrijsb.app.repositories.EntityRepository;
+import web.vieropnrijsb.app.repositories.GamesJPARepository;
 import web.vieropnrijsb.app.repositories.GamesRepository;
-import web.vieropnrijsb.app.repositories.GamesRepositoryJpa;
 import web.vieropnrijsb.app.views.CustomView;
 
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class GamesController {
     private GamesRepository gamesRepository;
 
     @Autowired
-    private GamesRepositoryJpa gamesRepositoryJpa;
+    private EntityRepository<Game> gamesJPARepository;
 
     @GetMapping("/test")
     public List<Game> getTestGames() {
@@ -79,10 +80,10 @@ public class GamesController {
 
         Game game = new Game(gameId,title, status,maxThinkTime, rated, createdAt, createdBy);
 
-        if (gamesRepository.findById(gameId) == null) throw new ResourceNotFound("Resource Not Found");
+        if (gamesJPARepository.findById(gameId) == null) throw new ResourceNotFound("Resource Not Found");
 
         if (Integer.parseInt(id) == gameId){
-            gamesRepositoryJpa.save(title, status,maxThinkTime, rated, createdAt.toString(), createdBy);
+            gamesJPARepository.save(game);
             return game;
         }
         throw new PreConditionFailed("IDs do not match");
