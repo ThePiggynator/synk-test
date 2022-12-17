@@ -24,4 +24,30 @@ public class Player {
         this.game = game;
         this.user = user;
     }
+
+    public long getId() {
+        return id;
+    }
+    public String getColor() {
+        return color;
+    }
+    public Game getGame() {
+        return game;
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+    public void setGame(Game game) {
+        this.game = game;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

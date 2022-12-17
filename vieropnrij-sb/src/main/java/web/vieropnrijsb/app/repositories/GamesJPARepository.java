@@ -38,7 +38,6 @@ public class GamesJPARepository
 
     @Override
     public Game findById(long id) {
-        // DONE fix below code to have the author found by the entity manager
         return this.entityManager.find(Game.class, id);
     }
 
