@@ -1,10 +1,13 @@
 package web.vieropnrijsb.app.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import web.vieropnrijsb.app.views.CustomView;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -13,7 +16,7 @@ public class Game {
     @JsonView(CustomView.shallow.class)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @JsonView(CustomView.shallow.class)
     private String title;
     @JsonView(CustomView.summary.class)
@@ -24,8 +27,10 @@ public class Game {
     private LocalDate createdAt;
     private String createdBy;
 
-    @OneToMany
-    private List<Player> players;
+    @OneToMany(mappedBy = "game")
+    @JsonManagedReference(value = "game")
+    private List<Player> players = new ArrayList<>();
+
     public Game(int id, String title, String status, int maxThinkTime, boolean rated, LocalDate createdAt, String createdBy) {
         this.id = id;
         this.title = title;
@@ -44,6 +49,7 @@ public class Game {
         this.id = id;
     }
     public Game() {
+
     }
 
     public Game(String title, String status, int maxThinkTime, boolean rated, LocalDate createdAt, String createdBy) {
@@ -63,66 +69,60 @@ public class Game {
         );
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public int getMaxThinkTime() {
-        return maxThinkTime;
-    }
-
-    public boolean isRated() {
-        return rated;
-    }
-
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-   public static void updateGame(Game oldGame, Game newGame){
+    public static void updateGame(Game oldGame, Game newGame){
         oldGame.setTitle(newGame.getTitle());
         oldGame.setRated(newGame.isRated());
         oldGame.setStatus(newGame.getStatus());
         oldGame.setMaxThinkTime(newGame.getMaxThinkTime());
     }
 
+    public long getId() {
+        return id;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public int getMaxThinkTime() {
+        return maxThinkTime;
+    }
+    public boolean isRated() {
+        return rated;
+    }
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+    public String getCreatedBy() {
+        return createdBy;
+    }
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
-
     public void setMaxThinkTime(int maxThinkTime) {
         this.maxThinkTime = maxThinkTime;
     }
-
     public void setRated(boolean rated) {
         this.rated = rated;
     }
-
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
-
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 }

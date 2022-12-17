@@ -13,6 +13,8 @@ import web.vieropnrijsb.app.models.User;
 import web.vieropnrijsb.app.repositories.EntityRepository;
 import web.vieropnrijsb.app.repositories.GamesRepositoryMock;
 
+import javax.transaction.Transactional;
+
 @SpringBootApplication
 public class VieropnrijSbApplication implements CommandLineRunner {
 
@@ -39,23 +41,29 @@ public class VieropnrijSbApplication implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
-        Game game1 = GamesRepositoryMock.createSampleGame(1);
-        gameEntityRepository.save(game1);
-        Game game2 = GamesRepositoryMock.createSampleGame(2);
-        gameEntityRepository.save(game2);
-        Game game3 = GamesRepositoryMock.createSampleGame(3);
-        gameEntityRepository.save(game3);
-        System.out.println("Games done!!!!!!!!!!!!!!!!!!!!!");
+        gameEntityRepository.save(GamesRepositoryMock.createSampleGame(1));
+        gameEntityRepository.save(GamesRepositoryMock.createSampleGame(2));
+        gameEntityRepository.save(GamesRepositoryMock.createSampleGame(3));
+
         userEntityRepository.save(new User(1, "Gerard", "gerard@gmail.com", "user", "bqwdihdqhiudqw"));
         userEntityRepository.save(new User(2, "Bas", "baslegend@gmail.com", "administrator", "ioqwfojijpoif"));
         userEntityRepository.save(new User(3, "Sjoerd", "sjoerd@gmail.com", "user", "nlmkjdvsndvni"));
-        System.out.println("Users done!!!!!!!!!!!!!!!!!");
 
-        playerEntityRepository.save(new Player(1, "Green", game1, userEntityRepository.findById(1)));
-        playerEntityRepository.save(new Player(2, "Blue", game2, userEntityRepository.findById(2)));
-        playerEntityRepository.save(new Player(3, "Orange", game3, userEntityRepository.findById(3)));
-        System.out.println("Players done!!!!!!!!!!!!!!!!!");
+
+        playerEntityRepository.save(new Player(1, "Green", gameEntityRepository.findById(1), userEntityRepository.findById(1)));
+        playerEntityRepository.save(new Player(2, "Blue", gameEntityRepository.findById(2), userEntityRepository.findById(2)));
+        playerEntityRepository.save(new Player(3, "Orange", gameEntityRepository.findById(3), userEntityRepository.findById(3)));
+
+        gameEntityRepository.findById(1).getPlayers().add(playerEntityRepository.findById(1));
+        gameEntityRepository.findById(1).getPlayers().add(playerEntityRepository.findById(2));
+
+        gameEntityRepository.findById(2).getPlayers().add(playerEntityRepository.findById(2));
+        gameEntityRepository.findById(2).getPlayers().add(playerEntityRepository.findById(3));
+
+        gameEntityRepository.findById(3).getPlayers().add(playerEntityRepository.findById(1));
+        gameEntityRepository.findById(3).getPlayers().add(playerEntityRepository.findById(3));
 
     }
 }

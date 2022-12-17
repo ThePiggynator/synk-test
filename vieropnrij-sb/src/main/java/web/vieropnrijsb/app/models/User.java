@@ -1,5 +1,7 @@
 package web.vieropnrijsb.app.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -16,7 +18,8 @@ public class User {
     private String role;
     private String hashedPassword;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value = "user")
     private List<Player> players;
 
     public User() {

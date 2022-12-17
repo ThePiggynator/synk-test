@@ -101,7 +101,7 @@ public class GamesRepositoryMock implements GamesRepository {
 
     public Game save(Game game) {
 
-        int id = game.getId();
+        long id = game.getId();
 
         for (Game g: games) {
             if (g.getId() == id){

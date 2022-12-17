@@ -3,7 +3,9 @@ package web.vieropnrijsb.app.repositories;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
+import web.vieropnrijsb.app.models.Game;
 import web.vieropnrijsb.app.models.Player;
+import web.vieropnrijsb.app.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,6 +46,10 @@ public class PlayerRepository implements EntityRepository<Player> {
         Player player = this.findById(id);
         this.entityManager.remove(findById(id));
         return player;
+    }
+
+    public boolean alreadyInGame(Game game, User user){
+        return true;
     }
 }
 

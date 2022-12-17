@@ -11,11 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import web.vieropnrijsb.app.exceptions.PreConditionFailed;
 import web.vieropnrijsb.app.exceptions.ResourceNotFound;
 import web.vieropnrijsb.app.models.Game;
+import web.vieropnrijsb.app.models.Player;
+import web.vieropnrijsb.app.models.User;
 import web.vieropnrijsb.app.repositories.EntityRepository;
 import web.vieropnrijsb.app.repositories.GamesJPARepository;
 import web.vieropnrijsb.app.repositories.GamesRepository;
 import web.vieropnrijsb.app.views.CustomView;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -27,6 +30,11 @@ public class GamesController {
 
     @Autowired
     private EntityRepository<Game> gamesRepository;
+
+    @Autowired
+    EntityRepository<Player> playerEntityRepository;
+    @Autowired
+    EntityRepository<User> userEntityRepository;
 
 //    @Autowired
 //    private EntityRepository<Game> gamesJPARepository;
@@ -82,5 +90,19 @@ public class GamesController {
         List<Game> allGames = gamesRepository.findAll();
 
         return allGames;
+    }
+
+    @PostMapping("{gameId}/players")
+    @Transactional
+    public Player addPlayer(@RequestBody Map<String, String> body, @PathVariable long gameId) throws PreConditionFailed{
+        if (gamesRepository.findById(gameId) == null || gamesRepository.findById(gameId).getStatus() == "FINISHED") throw new PreConditionFailed("Precondition failed");
+        long uId = Long.parseLong(body.get("userdId"));
+        if (userEntityRepository.findById(uId) == null || gamesRepository.findById(gameId).getPlayers().size() >= 2) throw new PreConditionFailed("Precondition failed");
+//        gamesRepository.findById(gameId).getPlayers().contains(playerEntityRepository.findById())
+        Player player = new Player("Blue", gamesRepository.findById(gameId), userEntityRepository.findById(uId));
+
+        gamesRepository.findById(gameId).getPlayers().add(player);
+        playerEntityRepository.save(player);
+        return player;
     }
 }
