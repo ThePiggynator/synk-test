@@ -25,6 +25,8 @@ public class Game {
     private LocalDate createdAt;
     private String createdBy;
 
+    @OneToMany
+    private List<Player> players;
     public Game(int id, String title, String status, int maxThinkTime, boolean rated, LocalDate createdAt, String createdBy) {
         this.id = id;
         this.title = title;

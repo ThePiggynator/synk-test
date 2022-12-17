@@ -1,9 +1,6 @@
 package web.vieropnrijsb.app.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -11,4 +8,10 @@ public class Player {
     @Id
     private long id;
     private String color;
+
+    @ManyToOne
+    private Game game;
+
+    @ManyToOne
+    private User user;
 }

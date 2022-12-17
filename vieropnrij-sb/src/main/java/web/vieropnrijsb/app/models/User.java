@@ -17,6 +17,6 @@ public class User {
     private String hashedPassword;
 
     @OneToMany
-    private List<Player>players;
+    private List<Player> players;
 
 }
