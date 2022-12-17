@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import web.vieropnrijsb.app.models.Game;
+import web.vieropnrijsb.app.models.Player;
+import web.vieropnrijsb.app.models.User;
 import web.vieropnrijsb.app.repositories.EntityRepository;
 import web.vieropnrijsb.app.repositories.GamesRepositoryMock;
 
@@ -16,11 +18,14 @@ public class VieropnrijSbApplication implements CommandLineRunner {
 
     @Autowired
     EntityRepository<Game> gameEntityRepository;
+    @Autowired
+    EntityRepository<User> userEntityRepository;
+    @Autowired
+    EntityRepository<Player> playerEntityRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(VieropnrijSbApplication.class, args);
     }
-
 
 
     @Bean
@@ -38,5 +43,11 @@ public class VieropnrijSbApplication implements CommandLineRunner {
         gameEntityRepository.save(GamesRepositoryMock.createSampleGame(1));
         gameEntityRepository.save(GamesRepositoryMock.createSampleGame(2));
         gameEntityRepository.save(GamesRepositoryMock.createSampleGame(3));
+        userEntityRepository.save(new User(1, "Gerard", "gerard@gmail.com", "user", "bqwdihdqhiudqw"));
+        userEntityRepository.save(new User(2, "Bas", "baslegend@gmail.com", "administrator", "ioqwfojijpoif"));
+        userEntityRepository.save(new User(3, "Sjoerd", "sjoerd@gmail.com", "user", "nlmkjdvsndvni"));
+        playerEntityRepository.save(new Player(1, "Green", gameEntityRepository.findById(1), userEntityRepository.findById(1)));
+        playerEntityRepository.save(new Player(2, "Blue", gameEntityRepository.findById(2), userEntityRepository.findById(2)));
+        playerEntityRepository.save(new Player(3, "Orange", gameEntityRepository.findById(3), userEntityRepository.findById(3)));
     }
 }

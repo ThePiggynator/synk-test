@@ -14,4 +14,14 @@ public class Player {
 
     @ManyToOne
     private User user;
+
+    public Player() {
+    }
+
+    public Player(long id, String color, Game game, User user) {
+        this.id = id;
+        this.color = color;
+        this.game = game;
+        this.user = user;
+    }
 }

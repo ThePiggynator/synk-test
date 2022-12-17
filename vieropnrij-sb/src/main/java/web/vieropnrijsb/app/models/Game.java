@@ -5,7 +5,6 @@ import web.vieropnrijsb.app.views.CustomView;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
