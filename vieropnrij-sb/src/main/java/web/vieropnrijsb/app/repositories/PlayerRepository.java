@@ -48,9 +48,6 @@ public class PlayerRepository implements EntityRepository<Player> {
         return player;
     }
 
-    public boolean alreadyInGame(Game game, User user){
-        return true;
-    }
 }
 
 

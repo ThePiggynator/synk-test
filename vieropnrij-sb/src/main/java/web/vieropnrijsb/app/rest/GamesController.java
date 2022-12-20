@@ -32,9 +32,9 @@ public class GamesController {
     private EntityRepository<Game> gamesRepository;
 
     @Autowired
-    EntityRepository<Player> playerEntityRepository;
+    private EntityRepository<Player> playerEntityRepository;
     @Autowired
-    EntityRepository<User> userEntityRepository;
+    private EntityRepository<User> userEntityRepository;
 
 //    @Autowired
 //    private EntityRepository<Game> gamesJPARepository;
@@ -97,9 +97,13 @@ public class GamesController {
     public Player addPlayer(@RequestBody Map<String, String> body, @PathVariable long gameId) throws PreConditionFailed{
         if (gamesRepository.findById(gameId) == null || gamesRepository.findById(gameId).getStatus() == "FINISHED") throw new PreConditionFailed("Precondition failed");
         long uId = Long.parseLong(body.get("userdId"));
-        if (userEntityRepository.findById(uId) == null || gamesRepository.findById(gameId).getPlayers().size() >= 2) throw new PreConditionFailed("Precondition failed");
-//        gamesRepository.findById(gameId).getPlayers().contains(playerEntityRepository.findById())
-        Player player = new Player("Blue", gamesRepository.findById(gameId), userEntityRepository.findById(uId));
+        List<Player> players = gamesRepository.findById(gameId).getPlayers();
+        if (userEntityRepository.findById(uId) == null || players.size() >= 2) throw new PreConditionFailed("Precondition failed");
+        String color = "Blue";
+        if (players.size() >= 1){
+            color = "Red";
+        }
+        Player player = new Player(color, gamesRepository.findById(gameId), userEntityRepository.findById(uId));
 
         gamesRepository.findById(gameId).getPlayers().add(player);
         playerEntityRepository.save(player);
