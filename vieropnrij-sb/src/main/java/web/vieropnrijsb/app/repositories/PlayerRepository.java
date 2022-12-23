@@ -48,6 +48,11 @@ public class PlayerRepository implements EntityRepository<Player> {
         return player;
     }
 
+    @Override
+    public List<Player> findByQuery(String jpqlName, Object... params) {
+        return null;
+    }
+
 }
 
 

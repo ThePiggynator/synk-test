@@ -45,5 +45,10 @@ public class UserRepository implements EntityRepository<User> {
         this.entityManager.remove(findById(id));
         return user;
     }
+
+    @Override
+    public List<User> findByQuery(String jpqlName, Object... params) {
+        return null;
+    }
 }
 

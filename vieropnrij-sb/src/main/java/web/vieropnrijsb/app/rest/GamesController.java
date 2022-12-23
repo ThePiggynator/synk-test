@@ -45,10 +45,13 @@ public class GamesController {
     }
 
     @GetMapping("")
-    public List<Game> getExampleGames() {
-        return gamesRepository.findAll();
+    public List<Game> getExampleGames(@RequestParam (required = false) String title, @RequestParam (required = false) String status, @RequestParam (required = false) long player) {
+        if (title == null && status == null && player == 0) return gamesRepository.findAll();
+        if (title !=null) return gamesRepository.findByQuery("Game_find_by_title", title);
+        if (status != null && player == 0) return gamesRepository.findByQuery("Game_find_by_status", status);
+        if (status == null && player != 0) return gamesRepository.findByQuery("Game_find_by_player", player);
+        return gamesRepository.findByQuery("Game_find_by_status_and_player", status, player);
     }
-
     @GetMapping("/{id}")
     public Game getById(@PathVariable String id) throws ResourceNotFound {
         Game game = gamesRepository.findById(Integer.parseInt(id));
