@@ -12,6 +12,16 @@ import java.util.List;
 
 @Entity
 @Table
+@NamedQueries({
+        @NamedQuery(name = "Game_find_by_title",
+        query = "SELECT g from Game g where g.title=?1"),
+        @NamedQuery(name = "Game_find_by_status",
+        query = "SELECT g from Game g where g.status=?1"),
+        @NamedQuery(name = "Game_find_by_player",
+        query = "SELECT Game FROM Player INNER JOIN Game ON Player.game.id = Game.id WHERE Player.user.id = ?1"),
+        @NamedQuery(name = "Game_find_by_status_and_player",
+        query = "SELECT Game FROM Player INNER JOIN Game ON Player.game.id = Game.id WHERE Player.user.id = ?1 AND Game.status =?2")
+})
 public class Game {
     @JsonView(CustomView.shallow.class)
     @Id

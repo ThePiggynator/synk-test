@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "`USER`")
+@Table(name = "`USERS`")
 public class User {
     @Id
     private long id;
