@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import web.vieropnrijsb.app.exceptions.BadRequest;
 import web.vieropnrijsb.app.exceptions.PreConditionFailed;
 import web.vieropnrijsb.app.exceptions.ResourceNotFound;
 import web.vieropnrijsb.app.models.Game;
@@ -45,11 +46,18 @@ public class GamesController {
     }
 
     @GetMapping("")
-    public List<Game> getExampleGames(@RequestParam (required = false) String title, @RequestParam (required = false) String status, @RequestParam (required = false) Long player) {
+    public List<Game> getExampleGames(@RequestParam (required = false) String title, @RequestParam (required = false) String status, @RequestParam (required = false) Long player)
+        throws BadRequest {
         if (title == null && status == null && player == null) return gamesRepository.findAll();
+
+        if ((status != "NEW" && status != "RUNNING" && status != "BROADCAST" && status != "FINISHED" && status != null)) throw new BadRequest("does not match the Game.Status enumeration");
+
+        else if (title != null && player == null) return gamesRepository.findByQuery("Game_find_by_status", status);
+
         if (title !=null) return gamesRepository.findByQuery("Game_find_by_title", title);
-        if (status != null && player == null) return gamesRepository.findByQuery("Game_find_by_status", status);
-        if (status == null && player != null) return gamesRepository.findByQuery("Game_find_by_player", player);
+
+        if (player != null && status == null) return gamesRepository.findByQuery("Game_find_by_player", player);
+
         return gamesRepository.findByQuery("Game_find_by_status_and_player", status, player);
     }
     @GetMapping("/{id}")
