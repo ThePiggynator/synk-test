@@ -7,20 +7,19 @@ import web.vieropnrijsb.app.views.CustomView;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 @Table
 @NamedQueries({
         @NamedQuery(name = "Game_find_by_title",
-        query = "SELECT g from Game g where g.title=?1"),
+        query = "SELECT g from Game g where g.title = ?1"),
         @NamedQuery(name = "Game_find_by_status",
-        query = "SELECT g from Game g where g.status=?1"),
+        query = "SELECT g from Game g where g.status = ?1"),
         @NamedQuery(name = "Game_find_by_player",
-        query = "SELECT Game FROM Player INNER JOIN Game ON Player.game.id = Game.id WHERE Player.user.id = ?1"),
+        query = "SELECT g FROM Player p INNER JOIN Game g ON p.game.id = g.id WHERE p.user.id = ?1"),
         @NamedQuery(name = "Game_find_by_status_and_player",
-        query = "SELECT Game FROM Player INNER JOIN Game ON Player.game.id = Game.id WHERE Player.user.id = ?1 AND Game.status =?2")
+        query = "SELECT g FROM Player p INNER JOIN Game g ON p.game.id = g.id WHERE p.user.id = ?1 AND g.status = ?2")
 })
 public class Game {
     @JsonView(CustomView.shallow.class)

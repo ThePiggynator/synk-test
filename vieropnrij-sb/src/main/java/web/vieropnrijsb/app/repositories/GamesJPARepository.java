@@ -49,9 +49,8 @@ public class GamesJPARepository
         return game;
     }
 
-    @Override
-    public List<Game> findByQuery(String jpqlName, Object... params) {
-        TypedQuery<Game> query = entityManager.createQuery(jpqlName, Game.class);
+    public List<Game> findByQuery(String jpqlName, Object ...params) {
+        TypedQuery<Game> query = entityManager.createNamedQuery(jpqlName, Game.class);
 
         for (int i = 0; i < params.length; i++) {
             query.setParameter(i+1, params[i]);
