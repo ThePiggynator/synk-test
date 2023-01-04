@@ -24,27 +24,25 @@ public class AuthenticationController {
     private JWTokenUtils tokenGenerator;
 
     @PostMapping(path = "/login", produces = "application/json")
-    public ResponseEntity<User> authenticateUser(@RequestBody ObjectNode signInInfo,
-        HttpServletRequest request,
-        HttpServletResponse response)
+    public ResponseEntity<User> authenticateUser(@RequestBody ObjectNode signInInfo, HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-            String userEmail = signInInfo.get("email").asText();
-            String password = signInInfo.get("password").asText();
+        String userEmail = signInInfo.get("email").asText();
+        String password = signInInfo.get("password").asText();
 
-            // Authenticate the user using the credentials provided
-            User user = userRepository.findUserWithEmailAndPassword(userEmail, password);
+        // Authenticate the user using the credentials provided
+        User user = userRepository.findUserWithEmailAndPassword(userEmail, password);
 
-            if (user == null) {
-                throw new AuthenticationException("Invalid user and/or password");
-            }
-
-
-            String tokenString = tokenGenerator.encode(user.getEmail(), user.getRole());
-
-            return ResponseEntity.accepted()
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenString)
-                    .body(user);
+        if (user == null) {
+            throw new AuthenticationException("Invalid user and/or password");
         }
+
+
+        String tokenString = tokenGenerator.encode(user.getEmail(), user.getRole());
+
+        return ResponseEntity.accepted()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenString)
+                .body(user);
     }
+}
 
