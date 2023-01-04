@@ -1,12 +1,12 @@
 package web.vieropnrijsb.app.security;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
     // path prefixes that will be protected by the authentication filter
     private static final Set<String> SECURED_PATHS =
-            Set.of("/users/", "/games/", "/players");
+            Set.of("/authentication", "/h2-console", "/favicon.ico");
 
     @Override
     protected void doFilterInternal(HttpServletRequest req,
