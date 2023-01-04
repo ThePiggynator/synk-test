@@ -30,12 +30,12 @@ public class JWTokenUtils {
     private int refreshExpiration;
 
 
-    public String encode(String id, String roletype) {
+    public String encode(String email, String roletype) {
 
         Key key = getKey(passphrase);
 
         return Jwts.builder()
-                .claim(Claims.SUBJECT,id) // registered claim
+                .claim(Claims.SUBJECT, email) // registered claim
                 .claim(Claims.AUDIENCE, roletype) // public claim
                 .setIssuer(issuer) // registered claim
                 .setIssuedAt(new Date()) // registered claim
@@ -60,6 +60,7 @@ public class JWTokenUtils {
                                     parseClaimsJws(encodedToken);
 
             Claims claims = jws.getBody();
+            System.out.println(claims.size());
             System.out.println("TOKEN INFO "+generateTokenInfo(claims));
             return generateTokenInfo(claims);
 
@@ -81,7 +82,6 @@ public class JWTokenUtils {
         tokenInfo.setEmail(claims.getSubject());
 
         tokenInfo.setRoletype(claims.getAudience());
-        tokenInfo.setCompanyId((int) claims.get("companyId"));
 
         tokenInfo.setIssuedAt(claims.getIssuedAt());
         tokenInfo.setExpiration(claims.getExpiration());

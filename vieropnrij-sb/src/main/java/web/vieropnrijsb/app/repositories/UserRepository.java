@@ -52,12 +52,12 @@ public class UserRepository implements EntityRepository<User> {
     }
 
 
-    public User findUserWithEmailAndPassword(String email, String password) {
+    public List<User> findUserWithEmailAndPassword(String email, String password) {
         TypedQuery<User> query =
                 this.entityManager.createQuery(
                         "SELECT u FROM User u WHERE u.email = :email AND u.hashedPassword = :password", User.class)
                         .setParameter("email", email).setParameter("password", password);
-        return query.getResultList().get(0);
+        return query.getResultList();
     }
 }
 

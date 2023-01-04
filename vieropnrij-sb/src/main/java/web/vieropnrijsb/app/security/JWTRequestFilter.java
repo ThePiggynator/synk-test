@@ -26,7 +26,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
     // path prefixes that will be protected by the authentication filter
     private static final Set<String> SECURED_PATHS =
-            Set.of("/authentication", "/h2-console", "/favicon.ico");
+            Set.of("/games", "/players", "/users");
 
     @Override
     protected void doFilterInternal(HttpServletRequest req,
@@ -35,7 +35,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String encodedToken = null;
-
 
         // get requested path
         String path = req.getServletPath();

@@ -31,9 +31,11 @@ public class AuthenticationController {
         String password = signInInfo.get("password").asText();
 
         // Authenticate the user using the credentials provided
-        User user = userRepository.findUserWithEmailAndPassword(userEmail, password);
-
-        if (user == null) {
+        User user;
+        try {
+            user = userRepository.findUserWithEmailAndPassword(userEmail, password).get(0);
+        }
+        catch (Exception e){
             throw new AuthenticationException("Invalid user and/or password");
         }
 
