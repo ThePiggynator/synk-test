@@ -33,6 +33,11 @@ public class User {
         this.hashedPassword = hashedPassword;
     }
 
+    public User(String email, String hashedPassword) {
+        this.email = email;
+        this.hashedPassword = hashedPassword;
+    }
+
     public long getId() {
         return id;
     }
