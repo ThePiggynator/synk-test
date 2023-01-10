@@ -52,7 +52,7 @@ public class GamesController {
 
         if ((status != "NEW" && status != "RUNNING" && status != "BROADCAST" && status != "FINISHED" && status != null)) throw new BadRequest("does not match the Game.Status enumeration");
 
-        else if (title != null && player == null) return gamesRepository.findByQuery("Game_find_by_status", status);
+        if (title != null && player == null) return gamesRepository.findByQuery("Game_find_by_status", status);
 
         if (title !=null) return gamesRepository.findByQuery("Game_find_by_title", title);
 
